@@ -1,4 +1,5 @@
 import random  # 練習2
+import time
 import sys
 
 import pygame as pg
@@ -56,6 +57,9 @@ def main():
     bb_rect.center = (x, y)  # 練習3
     kk_rect = kk_img.get_rect()  # 練習4
     kk_rect.center = (900, 400)   # 練習4
+    fonto = pg.font.Font(None, 80)  # 追加課題3
+    txt = fonto.render("Game Over",  # 追加課題3
+                       True,(0, 0, 0))  # 追加課題3
 
     while True:
         for event in pg.event.get():
@@ -82,10 +86,13 @@ def main():
             vy *= -1  # 練習5
         screen.blit(bb_image, bb_rect)  # 練習3
         screen.blit(kk_img, kk_rect)  # 練習4
-        if kk_rect.colliderect(bb_rect):  # 練習6
-            return  # 練習6
 
-        pg.display.update()
+        if  kk_rect.colliderect(bb_rect) == True:  # 追加課題3
+                screen.blit(txt, [300, 200])  # 追加課題3
+        pg.display.update()        
+        if kk_rect.colliderect(bb_rect):  # 練習6
+            time.sleep(5)  # 追加課題3
+            return  # 練習6
         clock.tick(1000)
 
 
