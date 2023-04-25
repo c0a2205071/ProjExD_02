@@ -12,16 +12,7 @@ delta = {
          }
  # 練習4
 
-delta2 ={
-        (0,-1): 270,
-        (+1, -1):  225,
-        (+1, 0): 180,
-        (+1, +1): 135,
-        (0, +1): 90,
-        (-1, +1): 45,
-        (-1, 0): 0,
-        (-1, -1): 315
-        }
+
 
 def check_bound(scr_rect: pg.rect, obj_rect: pg.rect) -> tuple[bool, bool]:
     """
@@ -45,6 +36,17 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    alufa = {
+            (-1, 0): pg.transform.rotozoom(kk_img, 0, 1.0),
+            (-1, +1): pg.transform.rotozoom(kk_img, 45, 1.0),
+            (0, +1): pg.transform.rotozoom(kk_img, 90, 1.0),
+            (+1, +1): pg.transform.rotozoom(kk_img, 135, 1.0),
+            (+1, 0): pg.transform.flip(kk_img, True,False),
+            (+1, -1): pg.transform.rotozoom(kk_img, 225, 1.0),
+            (0, -1): pg.transform.rotozoom(kk_img, 270, 1.0),
+            (-1, -1): pg.transform.rotozoom(kk_img, 315, 1.0)
+            }
+    #追加機能１
     tmr = 0
     accs = [a for a in range(1, 11)]  #追加機能２　早くなる
     bb_image = pg.Surface((20, 20))  # 練習1
@@ -66,11 +68,13 @@ def main():
             if event.type == pg.QUIT: 
                 return 0
         tmr += 1
-
         key_list = pg.key.get_pressed()  # 練習4
         for k, mv in delta.items():  # 練習4
             if key_list[k]:  # 練習4
                 kk_rect.move_ip(mv)  # 練習4
+                for ad,srf in alufa.items():   #追加機能１
+                    if ad == mv:   #追加機能１
+                        kk_img = srf   #追加機能１
 
         if check_bound(screen.get_rect(), kk_rect) != (True, True):  # 練習5
             for k, mv in delta.items():  # 練習5
@@ -86,7 +90,6 @@ def main():
             vy *= -1  # 練習5
         screen.blit(bb_image, bb_rect)  # 練習3
         screen.blit(kk_img, kk_rect)  # 練習4
-
         if  kk_rect.colliderect(bb_rect) == True:  # 追加課題3
                 screen.blit(txt, [300, 200])  # 追加課題3
         pg.display.update()        
