@@ -1,5 +1,5 @@
 import random  # 練習2
-import time
+import time  #追加課題３　
 import sys
 
 import pygame as pg
@@ -44,9 +44,9 @@ def main():
     clock = pg.time.Clock()
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
-    kk_images = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     tmr = 0
-    accs = [a for a in range(1, 11)]  #追加課題２　早くなる
+    accs = [a for a in range(1, 11)]  #追加機能２　早くなる
     bb_image = pg.Surface((20, 20))  # 練習1
     pg.draw.circle(bb_image, (255, 0, 0), (10, 10), 10)  # 練習1
     bb_image.set_colorkey((0, 0, 0))  # 練習1
@@ -57,9 +57,9 @@ def main():
     bb_rect.center = (x, y)  # 練習3
     kk_rect = kk_img.get_rect()  # 練習4
     kk_rect.center = (900, 400)   # 練習4
-    fonto = pg.font.Font(None, 80)  # 追加課題3
-    txt = fonto.render("Game Over",  # 追加課題3
-                       True,(0, 0, 0))  # 追加課題3
+    fonto = pg.font.Font(None, 80)  # 追加機能3
+    txt = fonto.render("Game Over",  # 追加機能3
+                       True,(0, 0, 0))  # 追加機能3
 
     while True:
         for event in pg.event.get():
