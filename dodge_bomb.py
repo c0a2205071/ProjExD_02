@@ -9,6 +9,9 @@ def main():
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     tmr = 0
+    bb_image = pg.Surface((20, 20))
+    pg.draw.circle(bb_image, (255, 0, 0), (10, 10), 10)
+    bb_image.set_colorkey((0, 0, 0))
 
     while True:
         for event in pg.event.get():
