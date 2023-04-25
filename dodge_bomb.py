@@ -69,6 +69,8 @@ def main():
             vy *= -1  # 練習5
         screen.blit(bb_image, bb_rect)  # 練習3
         screen.blit(kk_img, kk_rect)  # 練習4
+        if kk_rect.colliderect(bb_rect):  #練習6
+            return  #練習6
 
         pg.display.update()
         clock.tick(1000)
