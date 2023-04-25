@@ -11,6 +11,17 @@ delta = {
          }
  # 練習4
 
+delta2 ={
+        (0,-1): 270,
+        (+1, -1):  225,
+        (+1, 0): 180,
+        (+1, +1): 135,
+        (0, +1): 90,
+        (-1, +1): 45,
+        (-1, 0): 0,
+        (-1, -1): 315
+        }
+
 def check_bound(scr_rect: pg.rect, obj_rect: pg.rect) -> tuple[bool, bool]:
     """
     オブジェクトが画面内or画面買いを判定し、真理値タプルを返す関数
@@ -32,9 +43,9 @@ def main():
     clock = pg.time.Clock()
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
-    kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
-
+    kk_images = pg.transform.rotozoom(kk_img, 0, 2.0)
     tmr = 0
+    accs = [a for a in range(1, 11)]  #追加課題２　早くなる
     bb_image = pg.Surface((20, 20))  # 練習1
     pg.draw.circle(bb_image, (255, 0, 0), (10, 10), 10)  # 練習1
     bb_image.set_colorkey((0, 0, 0))  # 練習1
@@ -56,12 +67,14 @@ def main():
         for k, mv in delta.items():  # 練習4
             if key_list[k]:  # 練習4
                 kk_rect.move_ip(mv)  # 練習4
+
         if check_bound(screen.get_rect(), kk_rect) != (True, True):  # 練習5
             for k, mv in delta.items():  # 練習5
                 if key_list[k]:  # 練習5
                     kk_rect.move_ip(-mv[0], -mv[1])  # 練習5
         screen.blit(bg_img, [0, 0])  # 練習4
-        bb_rect.move_ip(vx, vy)  # 練習3
+        avx, avy = vx*accs[min(tmr//1000, 9)], vy*accs[min(tmr//1000, 9)]  #追加課題２　早くなる
+        bb_rect.move_ip(avx, avy)  # 練習3  追加課題２　早くなる
         yoko, tate = check_bound(screen.get_rect(), bb_rect)  # 練習5
         if not yoko:  # 練習5
             vx *= -1  # 練習5
@@ -69,8 +82,8 @@ def main():
             vy *= -1  # 練習5
         screen.blit(bb_image, bb_rect)  # 練習3
         screen.blit(kk_img, kk_rect)  # 練習4
-        if kk_rect.colliderect(bb_rect):  #練習6
-            return  #練習6
+        if kk_rect.colliderect(bb_rect):  # 練習6
+            return  # 練習6
 
         pg.display.update()
         clock.tick(1000)
